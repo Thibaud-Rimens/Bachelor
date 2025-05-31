@@ -1,0 +1,3 @@
+[submodule "hrdf-parser"]
+	path = hrdf-parser
+	url = git@github.com:Thibaud-Rimens/hrdf-parser.git
