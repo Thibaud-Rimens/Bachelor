@@ -1,3 +1,3 @@
-[Rapport](https://typst.app/project/wktNiM7SrNUjd973DdNWRD){:target="_blank"} 
+<a href="https://typst.app/project/wktNiM7SrNUjd973DdNWRD" target="_blank">Rapport</a>
 
-[Slides](https://docs.google.com/presentation/d/1w9FfJfewrY2h38xomsgJqVSPQYPbIjyvPCNEgzaYMME/edit?usp=sharing){:target="_blank"} 
+<a href="https://docs.google.com/presentation/d/1w9FfJfewrY2h38xomsgJqVSPQYPbIjyvPCNEgzaYMME/edit?usp=sharing" target="_blank">Slides</a>
