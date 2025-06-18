@@ -25,7 +25,12 @@ Mise en place d'un git général pour le projet de Bachelor
 
 # Semaine 5
 
+
+
 # Semaine 6
+
+Dans la documentation surtout parler de ce que j'ai fait et de ce que je dois encore faire. 
+(Faire une implementation nom -> integrer l'implementation nom a hrdf-parser -> gerer les differentes versions)
 
 # Semaine 7
 
