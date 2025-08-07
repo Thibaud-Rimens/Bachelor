@@ -8,7 +8,7 @@ mod structures;
 
 use std::env;
 use std::path::Path;
-use parsers::{DirectionParser, BitFieldParser, ExchangeTimeJourneyParser, LineParser};
+use parsers::{DirectionParser, BitFieldParser, ExchangeTimeAdministrationParser, ExchangeTimeJourneyParser, LineParser};
 use crate::parser::FileParser;
 
 fn main() -> std::io::Result<()>  {
@@ -24,11 +24,13 @@ fn main() -> std::io::Result<()>  {
     let mut direction_parser = DirectionParser;
     let mut bitfield_parser = BitFieldParser;
     let mut exchange_time_journey_parser = ExchangeTimeJourneyParser;
-    let mut line_parser = LineParser::default(); // Necessary because of hashmap
+    let mut line_parser = LineParser::default(); 
+    let mut exchange_time_administration_parser = ExchangeTimeAdministrationParser::default();
 
     direction_parser.read_file(&filepath, String::from("RICHTUNG"))?;
     bitfield_parser.read_file(&filepath, String::from("BITFELD"))?;
     exchange_time_journey_parser.read_file(&filepath, String::from("UMSTEIGZ"))?;
     line_parser.read_file(&filepath, String::from("LINIE"))?;
+    exchange_time_administration_parser.read_file(&filepath, String::from("UMSTEIGV"))?;
     Ok(())
 }

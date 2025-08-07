@@ -13,14 +13,7 @@ pub fn parse_string(s: &str) -> String {
 }
 
 pub fn parse_option_i32(s: Option<&str>) -> Option<i32> {
-    s.and_then(|v| {
-        let trimmed = v.trim();
-        if trimmed.is_empty() {
-            None
-        } else {
-            Some(trimmed.parse::<i32>().unwrap())
-        }
-    })
+    s.and_then(|v| v.trim().parse::<i32>().ok())
 }
 
 pub fn parse_vec_u8(s: &str) -> Vec<u8> {
@@ -33,4 +26,9 @@ pub fn parse_color((r, g, b): (&str, &str, &str)) -> Color {
         g.trim().parse::<i16>().unwrap(),
         b.trim().parse::<i16>().unwrap()
     )
+}
+
+// TODO: verifier si c'est coherent avec ce qui est necessaire
+pub fn parse_bool(s: &str) -> bool {
+    s != " "
 }

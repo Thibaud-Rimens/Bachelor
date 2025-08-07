@@ -1,18 +1,16 @@
 use nom::{IResult, bytes::complete::{take, tag}, character::complete::space1, combinator::rest, Parser};
-use rustc_hash::FxHashMap;
 use serde_json::{json, Map, Value};
 use crate::parser::FileParser;
-use crate::structures::Line;
+use crate::structures::{Line, HMap};
 use crate::utils::{parse_color, parse_i32, parse_string};
 
-type HMap = FxHashMap<String, Map<String, Value>>;
 #[derive(Default)]
 pub struct LineParser {
     data: HMap,
 }
 
 impl LineParser {
-    fn parse_line_name(input: &str) -> IResult<&str, &str> {
+    fn parse_name(input: &str) -> IResult<&str, &str> {
         let mut parser = (
             tag("K"),
             space1,
@@ -26,7 +24,7 @@ impl LineParser {
         Ok((input, name))
     }
 
-    fn parse_line_short_name(input: &str) -> IResult<&str, &str> {
+    fn parse_short_name(input: &str) -> IResult<&str, &str> {
         let mut parser = (
             tag("N T"),
             space1,
@@ -37,7 +35,7 @@ impl LineParser {
         Ok((input, short_name))
     }
 
-    fn parse_line_long_name(input: &str) -> IResult<&str, &str> {
+    fn parse_long_name(input: &str) -> IResult<&str, &str> {
         let mut parser = (
             tag("L T"),
             space1,
@@ -48,7 +46,7 @@ impl LineParser {
         Ok((input, long_name))
     }
 
-    fn parse_line_text_color(input: &str) -> IResult<&str, (&str, &str, &str)> {
+    fn parse_text_color(input: &str) -> IResult<&str, (&str, &str, &str)> {
         let mut parser = (
             tag("F"),
             space1,
@@ -63,7 +61,7 @@ impl LineParser {
         Ok((input, (r, g, b)))
     }
 
-    fn parse_line_background_color(input: &str) -> IResult<&str, (&str, &str, &str)> {
+    fn parse_background_color(input: &str) -> IResult<&str, (&str, &str, &str)> {
         let mut parser = (
             tag("B"),
             space1,
@@ -90,7 +88,7 @@ impl FileParser for LineParser {
         let mut obj = match self.data.remove(&id_string) {
             Some(obj) => obj,
             None => {
-                if let Ok((_, name)) = Self::parse_line_name(input) {
+                if let Ok((_, name)) = Self::parse_name(input) {
                     let mut new_obj = Map::new();
                     new_obj.insert("id".into(), json!(parse_i32(id)));
                     new_obj.insert("name".into(), json!(parse_string(name)));
@@ -101,13 +99,13 @@ impl FileParser for LineParser {
             }
         };
 
-        if let Ok((_, short_name)) = Self::parse_line_short_name(input) {
+        if let Ok((_, short_name)) = Self::parse_short_name(input) {
             obj.insert("short_name".into(), json!(parse_string(short_name)));
-        } else if let Ok((_, long_name)) = Self::parse_line_long_name(input) {
+        } else if let Ok((_, long_name)) = Self::parse_long_name(input) {
             obj.insert("long_name".into(), json!(parse_string(long_name)));
-        } else if let Ok((_, text_color)) = Self::parse_line_text_color(input) {
+        } else if let Ok((_, text_color)) = Self::parse_text_color(input) {
             obj.insert("text_color".into(), json!(parse_color(text_color)));
-        } else if let Ok((_, background_color)) = Self::parse_line_background_color(input) {
+        } else if let Ok((_, background_color)) = Self::parse_background_color(input) {
             obj.insert("background_color".into(), json!(parse_color(background_color)));
         }
 

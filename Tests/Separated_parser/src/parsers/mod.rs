@@ -20,3 +20,4 @@ pub use direction::DirectionParser;
 pub use bitfield::BitFieldParser;
 pub use exchange_journey::ExchangeTimeJourneyParser;
 pub use line::LineParser;
+pub use exchange_administration::ExchangeTimeAdministrationParser;

@@ -2,6 +2,9 @@ use rustc_hash::FxHashMap;
 use serde::{Deserialize, Serialize};
 use strum_macros::{Display, EnumString};
 use chrono::{NaiveDate, NaiveDateTime, NaiveTime};
+use serde_json::{Map, Value};
+
+pub type HMap = FxHashMap<String, Map<String, Value>>;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Direction {
@@ -17,13 +20,14 @@ pub struct BitField {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ExchangeTimeJourney {
+    id: i32,
     stop_id: i32,
     journey_legacy_id_1: i32,
     administration_1: String,
     journey_legacy_id_2: i32,
     administration_2: String,
     duration: i16,
-    // is_guaranteed: bool, // Removed for convenience
+    is_guaranteed: bool,
     bit_field_id: Option<i32>,
 }
 
